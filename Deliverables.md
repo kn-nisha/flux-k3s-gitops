@@ -1,4 +1,4 @@
-# Assignment Deliverables
+# Assignment Deliverables added in email
 
 ## 1. GitHub Repository
 URL: https://github.com/kn-nisha/flux-k3s-gitops
@@ -7,4 +7,4 @@ URL: https://github.com/kn-nisha/flux-k3s-gitops
 File: age.agekey
 
 ## 3. Grafana Dashboard
-File: wordpress-dashboard.json
+File: wordpress-grafana-dashboard.json
