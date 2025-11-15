@@ -8,13 +8,13 @@ spec:
   chart:
     spec:
       chart: loki
-      version: "6.4.1"  # Pin to a stable version that works with SingleBinary
+      version: "6.4.1"
       sourceRef:
         kind: HelmRepository
         name: grafana
       interval: 5m
   values:
-    deploymentMode: SingleBinary
+    deploymentMode: "SingleBinary"
 
     loki:
       auth_enabled: false
@@ -23,21 +23,6 @@ spec:
       storage:
         type: filesystem
 
-    # Only enable singleBinary, disable everything else explicitly
+    # Only configure singleBinary as specified by the chart for SingleBinary mode
     singleBinary:
-      enabled: true
       replicas: 1
-
-    # Explicitly disable other modes to avoid conflicts
-    backend:
-      enabled: false
-    read:
-      enabled: false
-    write:
-      enabled: false
-    gateway:
-      enabled: false
-    chunksCache:
-      enabled: false
-    resultsCache:
-      enabled: false
