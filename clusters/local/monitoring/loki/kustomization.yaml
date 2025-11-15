@@ -4,3 +4,4 @@ resources:
   - helmrepository.yaml
   - loki-helmrelease.yaml
   - promtail-helmrelease.yaml
+  - loki-ingress.yaml
