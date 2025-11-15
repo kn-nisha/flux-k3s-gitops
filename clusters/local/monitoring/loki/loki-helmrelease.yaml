@@ -7,19 +7,24 @@ spec:
   interval: 10m
   chart:
     spec:
-      chart: loki-single-binary
-      version: "0.4.0"
+      chart: loki
+      version: "5.3.2"
       sourceRef:
         kind: HelmRepository
         name: grafana
       interval: 5m
   values:
+    # Use the stable SingleBinary mode configuration
+    deploymentMode: SingleBinary
+
+    # Loki server configuration
     loki:
       auth_enabled: false
       commonConfig:
         replication_factor: 1
       storage:
         type: filesystem
+      # Schema configuration for Loki
       schemaConfig:
         configs:
         - from: "2024-01-01"
@@ -29,8 +34,18 @@ spec:
           index:
             prefix: loki_index_
             period: 24h
-    service:
-      port: 3100
-    persistence:
-      enabled: true
-      size: 1Gi
+
+    # Explicitly disable other modes to prevent conflicts
+    backend: {}
+    read: {}
+    write: {}
+    gateway: {}
+    test:
+      enabled: false
+
+    # Single binary configuration
+    singleBinary:
+      replicas: 1
+      persistence:
+        enabled: true
+        size: 1Gi
