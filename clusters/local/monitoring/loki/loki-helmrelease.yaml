@@ -23,6 +23,14 @@ spec:
       storage:
         type: filesystem
 
-    # Only configure singleBinary as specified by the chart for SingleBinary mode
+    # Ensure other components are disabled
+    backend: {}
+    read: {}
+    write: {}
+
+    # Configure singleBinary explicitly
     singleBinary:
       replicas: 1
+      persistence:
+        enabled: true
+        size: 1Gi
