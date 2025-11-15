@@ -8,3 +8,6 @@ File: age.agekey
 
 ## 3. Grafana Dashboard
 File: wordpress-grafana-dashboard.json
+
+Grafana Logs Screenshot:
+<img width="1888" height="962" alt="image" src="https://github.com/user-attachments/assets/02ddef5c-2eb0-4edd-8494-fbbf86d1e69e" />
