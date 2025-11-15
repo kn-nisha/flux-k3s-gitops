@@ -12,12 +12,12 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: grafana
+        namespace: flux-system
       interval: 5m
-  values:
-    # Use SingleBinary with proper configuration to avoid conflicts
-    deploymentMode: "SingleBinary"
 
-    # Loki main configuration
+  values:
+    deploymentMode: SingleBinary
+
     loki:
       auth_enabled: false
       commonConfig:
@@ -34,9 +34,27 @@ spec:
             prefix: loki_index_
             period: 24h
 
-    # Only configure singleBinary, don't define other components at all
     singleBinary:
       replicas: 1
       persistence:
         enabled: true
         size: 1Gi
+
+    # Disable all scalable components (critical!)
+    read:
+      replicas: 0
+    write:
+      replicas: 0
+    backend:
+      replicas: 0
+
+    distributor:
+      replicas: 0
+    ingester:
+      replicas: 0
+    querier:
+      replicas: 0
+    queryFrontend:
+      replicas: 0
+    indexGateway:
+      replicas: 0

@@ -1,0 +1,84 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  creationTimestamp: "2025-11-15T10:49:53Z"
+  finalizers:
+  - finalizers.fluxcd.io
+  generation: 2
+  labels:
+    kustomize.toolkit.fluxcd.io/name: flux-system
+    kustomize.toolkit.fluxcd.io/namespace: flux-system
+  name: loki
+  namespace: monitoring
+  resourceVersion: "24564"
+  uid: ca60c34b-64e3-4469-a432-83f2d665ea8c
+spec:
+  chart:
+    spec:
+      chart: loki
+      interval: 5m
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+      version: '*'
+  interval: 10m
+  values:
+    deploymentMode: SingleBinary
+    loki:
+      auth_enabled: false
+      commonConfig:
+        replication_factor: 1
+      schemaConfig:
+        configs:
+        - from: "2024-01-01"
+          index:
+            period: 24h
+            prefix: loki_index_
+          object_store: filesystem
+          schema: v13
+          store: tsdb
+      storage:
+        type: filesystem
+    singleBinary:
+      persistence:
+        enabled: true
+        size: 1Gi
+      replicas: 1
+status:
+  conditions:
+  - lastTransitionTime: "2025-11-15T10:59:33Z"
+    message: Running 'install' action with timeout of 5m0s
+    observedGeneration: 2
+    reason: Progressing
+    status: "True"
+    type: Reconciling
+  - lastTransitionTime: "2025-11-15T10:59:33Z"
+    message: 'Helm install failed for release monitoring/loki with chart loki@6.46.0:
+      execution error at (loki/templates/validate.yaml:31:4): You have more than zero
+      replicas configured for both the single binary and simple scalable targets.
+      If this was intentional change the deploymentMode to the transitional ''SingleBinary<->SimpleScalable''
+      mode'
+    observedGeneration: 2
+    reason: InstallFailed
+    status: "False"
+    type: Ready
+  - lastTransitionTime: "2025-11-15T10:49:56Z"
+    message: 'Helm install failed for release monitoring/loki with chart loki@6.46.0:
+      execution error at (loki/templates/validate.yaml:31:4): You have more than zero
+      replicas configured for both the single binary and simple scalable targets.
+      If this was intentional change the deploymentMode to the transitional ''SingleBinary<->SimpleScalable''
+      mode'
+    observedGeneration: 2
+    reason: InstallFailed
+    status: "False"
+    type: Released
+  failures: 3
+  helmChart: monitoring/monitoring-loki
+  lastAttemptedConfigDigest: sha256:b4a7da5fb2cc6d65a62ef02bee8e1e0f23eccf07cd3f073fb79856312568dcba
+  lastAttemptedGeneration: 2
+  lastAttemptedReleaseAction: install
+  lastAttemptedReleaseActionDuration: 127.078755ms
+  lastAttemptedRevision: 6.46.0
+  observedGeneration: -1
+  storageNamespace: monitoring
