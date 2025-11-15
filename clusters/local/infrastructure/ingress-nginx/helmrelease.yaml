@@ -18,4 +18,12 @@ spec:
       service:
         type: LoadBalancer
       config:
-        # We'll add Lua configuration here in Task 2
+        plugins: "redirect-404"
+        lua-shared-dicts: "configuration_data: 20"
+      extraVolumes:
+        - name: lua-plugin
+          configMap:
+            name: lua-redirect-404
+      extraVolumeMounts:
+        - name: lua-plugin
+          mountPath: /etc/nginx/lua/plugins/redirect-404
