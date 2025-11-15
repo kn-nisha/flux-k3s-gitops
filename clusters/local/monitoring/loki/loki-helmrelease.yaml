@@ -8,27 +8,36 @@ spec:
   chart:
     spec:
       chart: loki
+      version: "6.4.1"  # Pin to a stable version that works with SingleBinary
       sourceRef:
         kind: HelmRepository
         name: grafana
       interval: 5m
   values:
+    deploymentMode: SingleBinary
+
     loki:
       auth_enabled: false
       commonConfig:
         replication_factor: 1
       storage:
         type: filesystem
-    # Single binary configuration
+
+    # Only enable singleBinary, disable everything else explicitly
     singleBinary:
       enabled: true
       replicas: 1
-    # Disable other components to avoid conflicts
+
+    # Explicitly disable other modes to avoid conflicts
     backend:
       enabled: false
     read:
       enabled: false
     write:
       enabled: false
-    # Alternative approach: use simpleScalable mode with single replica
-    deploymentMode: SingleBinary
+    gateway:
+      enabled: false
+    chunksCache:
+      enabled: false
+    resultsCache:
+      enabled: false
