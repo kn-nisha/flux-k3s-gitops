@@ -19,10 +19,16 @@ spec:
         replication_factor: 1
       storage:
         type: filesystem
-    deploymentMode: SingleBinary
+    # Single binary configuration
     singleBinary:
+      enabled: true
       replicas: 1
-    backend: {}
+    # Disable other components to avoid conflicts
+    backend:
+      enabled: false
     read:
-      replicas: 0
-    write: {}
+      enabled: false
+    write:
+      enabled: false
+    # Alternative approach: use simpleScalable mode with single replica
+    deploymentMode: SingleBinary
