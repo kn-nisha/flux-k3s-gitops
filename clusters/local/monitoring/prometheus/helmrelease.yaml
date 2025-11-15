@@ -1,0 +1,23 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kube-prometheus-stack
+  namespace: monitoring
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: kube-prometheus-stack
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community
+      interval: 5m
+  values:
+    grafana:
+      enabled: true
+      adminPassword: admin123
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        hosts:
+          - app-monitor.local

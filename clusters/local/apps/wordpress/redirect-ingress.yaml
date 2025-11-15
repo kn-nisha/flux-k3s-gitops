@@ -1,21 +1,19 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: wordpress
+  name: redirect-notfound
   namespace: wordpress
   annotations:
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      if ($request_uri ~ "^/notfound") {
-        return 301 https://www.google.com;
-      }
+    nginx.ingress.kubernetes.io/permanent-redirect: https://www.google.com
+    nginx.ingress.kubernetes.io/permanent-redirect-code: "301"
 spec:
   ingressClassName: nginx
   rules:
   - host: app.local
     http:
       paths:
-      - path: /
-        pathType: Prefix
+      - path: /notfound
+        pathType: Exact
         backend:
           service:
             name: wordpress
