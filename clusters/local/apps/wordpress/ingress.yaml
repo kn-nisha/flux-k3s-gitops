@@ -3,11 +3,6 @@ kind: Ingress
 metadata:
   name: wordpress
   namespace: wordpress
-  annotations:
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      if ($request_uri ~ "^/notfound") {
-        return 301 https://www.google.com;
-      }
 spec:
   ingressClassName: nginx
   rules:
